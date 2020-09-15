@@ -1,0 +1,13 @@
+.post-list{
+   font-family: 'Cormorant Garamond', serif;
+   font-size: 20px;
+   display: flex;
+   flex-direction: column;
+   border: 1.2px solid #006363;
+   margin: 23px;
+   padding: 15px;
+}
+
+h3{
+    font-size: 25px;
+}
