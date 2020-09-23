@@ -1,22 +1,24 @@
 import React from 'react';
 import './UserAddForm.css';
-class UserAddForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            name: '',
+
+const initialState ={
+            name: null,
             email: '',
             salariu: '',
             imag: '',
-            nameError: '',
             isGoldClient: false,
-            //onDelete: false
-        };
+            nameError: "",
+};
+
+class UserAddForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = initialState;
     }
 
     updateName(event) {
-       // console.log(this.state.name);
         this.setState({name: event.target.value});
+        
     }
 
     updateEmail(event) {
@@ -35,54 +37,36 @@ class UserAddForm extends React.Component {
         this.setState({isGoldClient: event.target.checked});
     }
 
-   /* handleValidate(){
+    valid = () => {
+        let nameError = "";
+
         if(!this.state.name){
-            this.setState({ nameError:"User must have a name!" })
+            nameError = "User must have a name!";
+            this.setState({nameError});
+            return false;
         }
-    }*/
-
+        
+         return true;
     
-    handleValidate(event){
-        if (!this.state.name){
-          this.setState({
-            nameError: "User can't be empty!"
-          });
-          this.setState({
-            isValid: false
-          });
-        }
-    
-        else{
-          if (!this.state.name){
-            this.setState({
-              nameError: ""
-            });
-            this.setState({
-              isValid: true
-            });
-          }
-        }
-      }
+    }
 
-    /*updateDeleteUser(){
-        this.deleteUser = true;
-      }*/
-    
-   /* deleteUser(id) {
-        this.setState((prevState) => ({
-            users: prevState.users.filter(user => user.id !== id),
-        }))
-    };*/
-
-    //<div style={{color: "red"}}><center>{this.state.nameError}</center></div>
 
     render() {
-        const {name, email, salariu, imag, isGoldClient} = this.state;
+        const {name, email, salariu, imag, isGoldClient, nameError} = this.state;
 
         return (
             <form
                 className="user-add-form"
-                onSubmit={(event) => this.props.submitAddForm(event, name, email, salariu, imag, isGoldClient)}
+                onSubmit={(event) =>
+                    {
+                    event.preventDefault();
+                     if (this.valid()){
+                        this.props.submitAddForm(event, name, email, salariu, imag, isGoldClient);
+                        this.setState(initialState);
+                        }
+                    }
+                   
+                 }
             >
                 <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap" rel="stylesheet"></link>
                 <link href="https://fonts.googleapis.com/css2?family=Red+Rose&display=swap" rel="stylesheet"></link>
@@ -94,6 +78,8 @@ class UserAddForm extends React.Component {
                     name="name"
                     onChange={(event) => this.updateName(event)}
                 />
+                <div className="error">{nameError}</div>
+
                 <label htmlFor="email">Email:</label>
                 <input
                     type="email"
@@ -127,7 +113,6 @@ class UserAddForm extends React.Component {
                     type="submit" 
                     className="btnsub" 
                     value="Add New User"
-                    //onChange={(event) => this.handleValidate()}
                     />
         
             </form>

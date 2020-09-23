@@ -2,7 +2,6 @@ import React from 'react';
 import UserList from './components/UserList';
 import UserAddForm from './components/UserAddForm';
 import PostList from './components/PostList';
-
 import './App.css';
 
 class App extends React.Component {
@@ -14,8 +13,6 @@ class App extends React.Component {
       users: [],
       posts: [],
       display: "users",
-     // nameError:"",
-      //isValid: true
     };
   }
 
@@ -58,68 +55,8 @@ class App extends React.Component {
     });
   }
 
-  /*handleValid(){
-    this.setState({
-      nameError: ""
-    })
-  }
-  handleError(){
-    this.setState({
-      nameError: "User can't be empty!"
-    })
-  }*/
-
- 
-
-  /*handleValidate(){
-    if (!this.state.name){
-      this.setState({
-        nameError: "User can't be empty!"
-      });
-      this.setState({
-        isValid: false
-      });
-    }
-
-    else{
-      if (!this.state.name){
-        this.setState({
-          nameError: ""
-        });
-        this.setState({
-          isValid: true
-        });
-      }
-    }
-  }
-  */
-
- /* validate = () => {
-   /* let nameError ="";
-    if (!this.state.name){
-      nameError = "User can't be empty!";
-      return false;
-    }
-     return true;*/
-    /*if (!this.state.name){
-      this.setState({
-        nameError: "User can't be empty!"
-      });
-      return false;
-    }
-
-    //else{
-      this.setState({
-       nameError: ""
-      });
-      return true;
-    //}
-    
-  };*/
-
   getMaxId(users) {
     let maxId = 0;
-
     users.forEach(user => {
       if (user.id > maxId) {
         maxId = user.id;
@@ -129,10 +66,18 @@ class App extends React.Component {
     return maxId;
   }
 
+  deleteUser = (event, id) => {
+    const usersCopy = [...this.state.users];
+
+    const updateUser = usersCopy.filter(user => user.id !== id);
+
+    this.setState({ users: updateUser });
+}
+
+
   submitAddForm(event, name, email, salariu, imag, isGoldClient) {
     event.preventDefault();
-    //const isValid = this.validate();
-    //if(this.isValid){
+    event.target.reset();
     this.setState(prevState => {
       return {
         users: [
@@ -143,28 +88,20 @@ class App extends React.Component {
             email,
             salariu,
             imag,
-            isGoldClient
+            isGoldClient,
           }
         ]
       }
     });
   }
 
-  deleteUser(id) {
-    const changeUsers = Object.assign([], this.state.users);
-    changeUsers.splice(id,1);
-    this.setState({users: changeUsers});
-  }
-
-
-
+ 
   render() {
     return(
       <div className="app" style={{background: this.state.background, color: this.state.colorText}}>
         <link href="https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap" rel="stylesheet"></link>
         <h1>Admin panel - Project 1</h1>
         <UserAddForm submitAddForm={(event, name, email, salariu, imag, isGoldClient) => this.submitAddForm(event, name, email, salariu, imag, isGoldClient)}/>
-        <div style={{color: "red"}}><center>{this.state.nameError}</center></div>c
         {
           this.state.display === "users" 
              ? <UserList users={this.state.users} deleteUser={(event,id) => this.deleteUser(event,id)}/>

@@ -28,6 +28,7 @@ h3{
     justify-content: space-around;
     font-family: 'Quantico', sans-serif;
     font-size: 18px;
+    margin-top: 10px;
 }
 
 .delete-btns:hover {
