@@ -13,5 +13,5 @@
 ### Schimbare culoare fundal si a font text
  - dând click pe butonele din subsolul paginii, putem schimba culoarea de fundal a paginii sau fontul textului
 ### Validarea datelor
- - emailul introdus trebuie să conțină "@" și ".", iar câmpul de numele trimis gol
+ - emailul introdus trebuie să conțină "@" și ".", iar câmpul de nume nu poate fi trimis gol
 
